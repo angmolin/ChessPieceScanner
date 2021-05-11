@@ -32,8 +32,9 @@ bool moveJ(SerialPort &serial, unsigned int degree)
 
 int readJ(SerialPort &serial)
 {
+#ifndef DEBUG
     char command[MAX_MESSAGE_LENGTH] = "cps300j";
-    int result;
+    int result = 0;
 
     serial.send(command, strlen(command) + 1);
     serial.recv(command, sizeof(command));
@@ -44,6 +45,9 @@ int readJ(SerialPort &serial)
     }
     else
         throw std::runtime_error("¡No se pudo obtener la posicion J del escáner!");
+#else
+    return 0;
+#endif
 }
 
 bool moveY(SerialPort &serial, unsigned int degree)
@@ -56,8 +60,9 @@ bool moveY(SerialPort &serial, unsigned int degree)
 
 int readY(SerialPort &serial)
 {
+#ifndef DEBUG
     char command[MAX_MESSAGE_LENGTH] = "cps300y";
-    int result;
+    int result = 0;
 
     serial.send(command, strlen(command) + 1);
     serial.recv(command, sizeof(command));
@@ -68,6 +73,9 @@ int readY(SerialPort &serial)
     }
     else
         throw std::runtime_error("¡No se pudo obtener la posicion Y del escáner!");
+#else
+    return 0;
+#endif
 }
 
 bool moveZ(SerialPort &serial, unsigned int degree)
@@ -80,8 +88,9 @@ bool moveZ(SerialPort &serial, unsigned int degree)
 
 int readZ(SerialPort &serial)
 {
+#ifndef DEBUG
     char command[MAX_MESSAGE_LENGTH] = "cps300z";
-    int result;
+    int result = 0;
 
     serial.send(command, strlen(command) + 1);
     serial.recv(command, sizeof(command));
@@ -92,6 +101,9 @@ int readZ(SerialPort &serial)
     }
     else
         throw std::runtime_error("¡No se pudo obtener la posicion Z del escáner!");
+#else
+    return 0;
+#endif
 }
 
 bool calibrate(SerialPort &serial)
@@ -125,7 +137,7 @@ bool liberate(SerialPort &serial)
 
 int saveImage(const char *name, WebcamV4L2::bufferV4L2_t buffer)
 {
-    int result;
+    int result = 0;
 
     int imageFile = open(name, O_WRONLY | O_CREAT, 0660);
     if (imageFile < 0)
@@ -285,23 +297,15 @@ void photoBooth(SerialPort &serial, WebcamV4L2 &webcamV4L2)
     saveCursor();
     pathLength = strlen(path);
 
-#ifdef DEBUG
-    std::wcout << L"photoBoothPhotos: " << photoBoothPhotos.size() << std::endl;
-#endif
-
     for (i = 0; i < photoBoothPhotos.size(); i++)
     {
-#ifndef DEBUG
         moveJ(serial, photoBoothPhotos[i].coordinate.j);
         moveY(serial, photoBoothPhotos[i].coordinate.y);
-#endif
 
         for (z = 0; z <= maxZ; z += stepZ)
         {
-#ifndef DEBUG
             moveZ(serial, z);
             sleep(1);
-#endif
 
             restoreCursor();
 
@@ -330,34 +334,26 @@ void photoBooth(SerialPort &serial, WebcamV4L2 &webcamV4L2)
                 }
                 std::wcout << "OK!\n";
             }
-#ifndef DEBUG
             imageJPEG image(webcamV4L2.captureFrame());
-#endif
 
             if (photoBoothCropEnabled)
             {
-#ifndef DEBUG
                 image.crop(
                     photoBoothPhotos[i].crop.x - photoBoothCropMargin.x,
                     photoBoothPhotos[i].crop.y - photoBoothCropMargin.y,
                     photoBoothPhotos[i].crop.w + photoBoothCropMargin.x * 2,
                     photoBoothPhotos[i].crop.h + photoBoothCropMargin.y * 2);
-#endif
             }
 
-#ifndef DEBUG
             image.save(path, photoBoothQuality);
-#endif
 
             beep();
 
             sleep(1);
         }
 
-#ifndef DEBUG
         moveZ(serial, 0);
         sleep(maxZ * 0.015);
-#endif
     }
 
     restoreCursor();
@@ -365,14 +361,12 @@ void photoBooth(SerialPort &serial, WebcamV4L2 &webcamV4L2)
     std::wcout << L"¡Finalizado!\n"
                << std::flush;
 
-#ifndef DEBUG
     moveJ(serial, 30);
     sleep(1);
     moveY(serial, 0);
     sleep(1);
     moveZ(serial, 0);
     sleep(1);
-#endif
 }
 
 void manualMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2)
@@ -392,21 +386,15 @@ void manualMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2)
     try
     {
         std::wcout << L"Obteniendo posición del eje J..." << std::flush;
-#ifndef DEBUG
         jSteps = readJ(serial);
-#endif
         std::wcout << L"OK!\n";
 
         std::wcout << L"Obteniendo posición del eje Y..." << std::flush;
-#ifndef DEBUG
         ySteps = readY(serial);
-#endif
         std::wcout << L"OK!\n";
 
         std::wcout << L"Obteniendo posición del eje Z..." << std::flush;
-#ifndef DEBUG
         zSteps = readZ(serial);
-#endif
         std::wcout << L"OK!\n";
     }
     catch (const std::exception &e)
@@ -460,23 +448,17 @@ void manualMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2)
         if (key == Terminal::KEY_UP)
         {
             ySteps = min(ySteps + step, 90);
-#ifndef DEBUG
             moveY(serial, ySteps);
-#endif
         }
         else if (key == Terminal::KEY_DOWN)
         {
             ySteps = max(ySteps - step, 0);
-#ifndef DEBUG
             moveY(serial, ySteps);
-#endif
         }
         else if (key == Terminal::KEY_RIGHT)
         {
             zSteps = (zSteps + step) % 360;
-#ifndef DEBUG
             moveZ(serial, zSteps);
-#endif
         }
         else if (key == Terminal::KEY_LEFT)
         {
@@ -484,31 +466,23 @@ void manualMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2)
 
             if (zSteps < 0)
                 zSteps = 360 - abs(zSteps);
-#ifndef DEBUG
             moveZ(serial, zSteps);
-#endif
         }
         else if (key == Terminal::KEY_W)
         {
             jSteps = min(jSteps + step, 120);
-#ifndef DEBUG
             moveJ(serial, jSteps);
-#endif
         }
         else if (key == Terminal::KEY_S)
         {
             jSteps = max(jSteps - step, 0);
-#ifndef DEBUG
             moveJ(serial, jSteps);
-#endif
         }
         else if (key == Terminal::KEY_P)
         {
-#ifndef DEBUG
             WebcamV4L2::bufferV4L2_t buffer = webcamV4L2.captureFrame();
 
             saveImage(previewFile, buffer);
-#endif
         }
         else if (key == Terminal::KEY_ADD)
         {
@@ -559,10 +533,8 @@ void expertMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2)
     {
         wcstombs(command, wcommand, MAX_MESSAGE_LENGTH);
 
-#ifndef DEBUG
         serial.send(command, strlen(command) + 1);
         serial.recv(command, sizeof(command));
-#endif
 
         restoreCursor();
         eraseDisplay();
@@ -589,123 +561,63 @@ void loadConfigWebcam(WebcamV4L2 &webcamV4L2)
     {
         if (sscanf(config.getline(), "auto_exposure: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_auto_exposure(value);
-#else
-            std::wcout << L"auto_exposure: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "auto_white_balance: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_auto_white_balance(value);
-#else
-            std::wcout << L"auto_white_balance: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "backlight_compensation: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_backlight_compensation(value);
-#else
-            std::wcout << L"backlight_compensation: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "brightness: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_brightness(value);
-#else
-            std::wcout << L"brightness: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "contrast: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_contrast(value);
-#else
-            std::wcout << L"contrast: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "exposure_time: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_exposure_time(value);
-#else
-            std::wcout << L"exposure_time: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "gain: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_gain(value);
-#else
-            std::wcout << L"gain: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "gamma_correction: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_gamma_correction(value);
-#else
-            std::wcout << L"gamma_correction: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "hue: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_hue(value);
-#else
-            std::wcout << L"hue: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "power_line_frequency: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_power_line_frequency(value);
-#else
-            std::wcout << L"power_line_frequency: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "saturation: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_saturation(value);
-#else
-            std::wcout << L"saturation: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "sharpness: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_sharpness(value);
-#else
-            std::wcout << L"sharpness: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "white_balance_temperature: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_white_balance_temperature(value);
-#else
-            std::wcout << L"white_balance_temperature: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "vertical_flip: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_vertical_flip(value);
-#else
-            std::wcout << L"vertical_flip: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "horizontal_flip: %i", &value) == 1)
         {
-#ifndef DEBUG
             webcamV4L2.configure_horizontal_flip(value);
-#else
-            std::wcout << L"horizontal_flip: " << value << std::endl;
-#endif
         }
     }
 }
@@ -725,48 +637,28 @@ void loadConfigPhotoBooth()
     {
         if (sscanf(config.getline(), "image_quality: %u", &value) == 1)
         {
-
             photoBoothQuality = value;
-#ifdef DEBUG
-            std::wcout << L"image_quality: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "crop_enabled: %u", &value) == 1)
         {
-
             photoBoothCropEnabled = value == 0 ? false : true;
-#ifdef DEBUG
-            std::wcout << L"crop_enabled: " << value << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "crop_margin: %u %u", &x, &y) == 2)
         {
             photoBoothCropMargin = {x, y};
-#ifdef DEBUG
-            std::wcout << L"crop_margin: " << x << L", " << y << std::endl;
-#endif
         }
         else if (sscanf(config.getline(), "image%u: %u %u", &i, &y, &j) == 3)
         {
-#ifdef DEBUG
-            std::wcout << L"image" << i << L": " << y << L", " << j << std::endl;
-#endif
             photo.coordinate.y = y;
             photo.coordinate.j = j;
 
             if (!photoBoothCropEnabled)
             {
                 photoBoothPhotos.push_back(photo);
-#ifdef DEBUG
-                std::wcout << L"Añadido! (" << photoBoothPhotos.size() << L")" << std::endl;
-#endif
             }
         }
         else if (sscanf(config.getline(), "crop%u: %u %u %u %u", &i, &x, &y, &w, &h) == 5)
         {
-#ifdef DEBUG
-            std::wcout << L"crop" << i << L": " << x << L", " << y << L", " << w << L", " << h << std::endl;
-#endif
             photo.crop.x = x;
             photo.crop.y = y;
             photo.crop.w = w;
@@ -775,9 +667,6 @@ void loadConfigPhotoBooth()
             if (photoBoothCropEnabled)
             {
                 photoBoothPhotos.push_back(photo);
-#ifdef DEBUG
-                std::wcout << L"Añadido! (" << photoBoothPhotos.size() << L")" << std::endl;
-#endif
             }
         }
     }

@@ -34,6 +34,7 @@ SerialPort::SerialPort(const char *device, const unsigned int speed)
 
 void SerialPort::initialize()
 {
+#ifndef DEBUG
     // Consultamos si el archivo corresponde a un dispositivo
     struct stat _stat;
 
@@ -76,6 +77,7 @@ void SerialPort::initialize()
 
     if (tcsetattr(this->fileDescriptor, TCSANOW, &_termios) != 0)
         throw std::runtime_error("¡No se pudo configurar el puerto serie!");
+#endif
 
     sleep(1);
 }
@@ -95,11 +97,13 @@ void SerialPort::finalize()
 {
     if (this->fileDescriptor != -1)
     {
+#ifndef DEBUG
         // Cerramos el dispositivo
         if (close(this->fileDescriptor) < 0)
         {
             throw std::runtime_error("¡Error al cerrar el dispositivo!");
         }
+#endif
 
         this->fileDescriptor = -1;
     }
@@ -107,6 +111,7 @@ void SerialPort::finalize()
 
 int SerialPort::send(const char *buffer, unsigned int size)
 {
+#ifndef DEBUG
     int result;
 
     if (this->fileDescriptor == -1)
@@ -114,6 +119,9 @@ int SerialPort::send(const char *buffer, unsigned int size)
 
     result = write(this->fileDescriptor, buffer, size);
     return result;
+#else
+    return size;
+#endif
 }
 
 int SerialPort::recv(char *buffer, unsigned int size)
@@ -122,6 +130,7 @@ int SerialPort::recv(char *buffer, unsigned int size)
     char byte;
     int n;
 
+#ifndef DEBUG
     if (this->fileDescriptor == -1)
         throw std::runtime_error("¡No se puede leer de un dispositivo sin inicializar!");
 
@@ -145,4 +154,7 @@ int SerialPort::recv(char *buffer, unsigned int size)
     buffer[i] = '\0';
 
     return i;
+#else
+    return size;
+#endif
 }

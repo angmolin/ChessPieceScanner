@@ -1,2 +1,4 @@
-
-doc/~tfg memoria~5dyn_j.idlk
+./.vscode
+./bin
+./obj
+*.idlk

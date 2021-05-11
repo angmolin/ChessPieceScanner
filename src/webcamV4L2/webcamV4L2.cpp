@@ -25,6 +25,7 @@ WebcamV4L2::WebcamV4L2(const char *device, const unsigned int width, const unsig
 
 void WebcamV4L2::initialize()
 {
+#ifndef DEBUG
     // Consultamos si el archivo corresponde a un dispositivo
     struct stat _stat;
 
@@ -129,12 +130,17 @@ void WebcamV4L2::initialize()
         free(this->captureBuffer);
         throw std::runtime_error("¡No se pudo iniciar el streaming!");
     }
+#else
+    this->captureBufferCount = 1;
+    this->captureBuffer = (WebcamV4L2::bufferV4L2_t *)calloc(1, sizeof(*captureBuffer));
+#endif
 
     sleep(1);
 }
 
 bool WebcamV4L2::configure(__u32 id, __s32 value)
 {
+#ifndef DEBUG
     if (this->fileDescriptor != -1)
     {
         v4l2_control c = { id, value };
@@ -146,80 +152,128 @@ bool WebcamV4L2::configure(__u32 id, __s32 value)
     }
 
     return false;
+#else
+    return true;
+#endif
 }
 
 bool WebcamV4L2::configure_auto_exposure(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_EXPOSURE_AUTO: %i", value);
+#endif
     return configure(V4L2_CID_EXPOSURE_AUTO, value);
 }
 
 bool WebcamV4L2::configure_auto_white_balance(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_AUTO_WHITE_BALANCE: %i", value);
+#endif
     return configure(V4L2_CID_AUTO_WHITE_BALANCE, value);
 }
 
 bool WebcamV4L2::configure_backlight_compensation(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_BACKLIGHT_COMPENSATION: %i", value);
+#endif
     return configure(V4L2_CID_BACKLIGHT_COMPENSATION, value);
 }
 
 bool WebcamV4L2::configure_brightness(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_BRIGHTNESS: %i", value);
+#endif
     return configure(V4L2_CID_BRIGHTNESS, value);
 }
 
 bool WebcamV4L2::configure_contrast(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_CONTRAST: %i", value);
+#endif
     return configure(V4L2_CID_CONTRAST, value);
 }
 
 bool WebcamV4L2::configure_exposure_time(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_EXPOSURE: %i", value);
+#endif
     return configure(V4L2_CID_EXPOSURE, value);
 }
 
 bool WebcamV4L2::configure_gain(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_GAIN: %i", value);
+#endif
     return configure(V4L2_CID_GAIN, value);
 }
 
 bool WebcamV4L2::configure_gamma_correction(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_GAMMA: %i", value);
+#endif
     return configure(V4L2_CID_GAMMA, value);
 }
 
 bool WebcamV4L2::configure_hue(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_HUE: %i", value);
+#endif
     return configure(V4L2_CID_HUE, value);
 }
 
 bool WebcamV4L2::configure_power_line_frequency(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_POWER_LINE_FREQUENCY: %i", value);
+#endif
     return configure(V4L2_CID_POWER_LINE_FREQUENCY, value);
 }
 
 bool WebcamV4L2::configure_saturation(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_SATURATION: %i", value);
+#endif
     return configure(V4L2_CID_SATURATION, value);
 }
 
 bool WebcamV4L2::configure_sharpness(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_SHARPNESS: %i", value);
+#endif
     return configure(V4L2_CID_SHARPNESS, value);
 }
 
 bool WebcamV4L2::configure_white_balance_temperature(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_WHITE_BALANCE_TEMPERATURE: %i", value);
+#endif
     return configure(V4L2_CID_WHITE_BALANCE_TEMPERATURE, value);
 }
 
 bool WebcamV4L2::configure_vertical_flip(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_VFLIP: %i", value);
+#endif
     return configure(V4L2_CID_VFLIP, value);
 }
 
 bool WebcamV4L2::configure_horizontal_flip(__s32 value)
 {
+#ifdef VERBOSE
+    printf("V4L2_CID_HFLIP: %i", value);
+#endif
     return configure(V4L2_CID_HFLIP, value);
 }
 
@@ -236,6 +290,7 @@ WebcamV4L2::~WebcamV4L2()
 
 void WebcamV4L2::finalize()
 {
+#ifndef DEBUG
     if (this->fileDescriptor != -1)
     {
         free(this->device);
@@ -265,10 +320,14 @@ void WebcamV4L2::finalize()
 
         this->fileDescriptor = -1;
     }
+#else
+    free(this->captureBuffer);
+#endif
 }
 
 const WebcamV4L2::bufferV4L2_t &WebcamV4L2::captureFrame()
 {
+#ifndef DEBUG
     struct v4l2_buffer _buffer;
 
     _buffer.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
@@ -286,4 +345,7 @@ const WebcamV4L2::bufferV4L2_t &WebcamV4L2::captureFrame()
     this->indexBuffer++;
 
     return this->captureBuffer[_buffer.index];
+#else
+    return this->testBuffer;
+#endif
 }
