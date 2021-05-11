@@ -175,7 +175,7 @@ bool liberate(SerialPort &serial);
 int saveImage(const char *name, WebcamV4L2::bufferV4L2_t buffer);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Emite un sonido
  */
 static inline void beep()
 {
@@ -183,20 +183,23 @@ static inline void beep()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Avanza el cursor una posicion hacia arriba
  */
 static inline void cursorUp()
 {
     std::wcout << "\033[A";
 }
 
+/**
+ * Avanza el cursor una posicion hacia abajo
+ */
 static inline void cursorDown()
 {
     std::wcout << "\033[B";
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Avanza el cursor una posicion hacia la derecha
  */
 static inline void cursorForward()
 {
