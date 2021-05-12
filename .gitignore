@@ -1,4 +1,6 @@
 ./.vscode
+./.vs
 ./bin
 ./obj
 *.idlk
+.DS_Store
