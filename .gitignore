@@ -2,5 +2,3 @@
 ./bin
 ./obj
 *.idlk
-*.opendb
-*.opensdf
