@@ -207,7 +207,7 @@ static inline void cursorForward()
 }
 
 /**
- * Avanza el cursor una posicion hacia atras
+ * Avanza el cursor una posicion hacia la izquierda
  */
 static inline void cursorBack()
 {

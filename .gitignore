@@ -1,6 +1,6 @@
 ./.vscode
+./.vs
 ./bin
 ./obj
 *.idlk
-*.opendb
-*.opensdf
+.DS_Store
