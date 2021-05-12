@@ -18,52 +18,52 @@ class imageJPEG
 {
 public:
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor publico con un parametro de tipo char
      */
     imageJPEG(const char *file);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor con buffer de parametro de entrada
      */
     imageJPEG(const WebcamV4L2::bufferV4L2_t buffer);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que guarda un archivo
      */
     void save(const char *file, const unsigned int quality) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que guarda un archivo
      */
     void savePpm(const char *file) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene la altura de la imagen
      */
     unsigned int getHeight() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene la anchura de la imagen
      */
     unsigned int getWidth() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene el tamaño de los pixeles de la imagen
      */
     unsigned int getPixelSize() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene los pixeles de la imagen
      */
     const std::vector<unsigned char> getPixel(const unsigned int x, const unsigned int y) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene la altura de la imagen***************************************************************************************************
      */
     unsigned char getLuminance(const unsigned int x, const unsigned int y) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene el promedio de los valores del tamaño de la caja
      */
     const std::vector<unsigned char> getAverage(const unsigned int x, const unsigned int y, const unsigned int boxSize) const;
 
@@ -83,17 +83,17 @@ public:
     // void resize(const unsigned int newWidth);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que añade el valor al final 
      */
     void crop(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion dibuja las lineas
      */
     void drawLine(const unsigned int x1, const unsigned int y1, const unsigned int x2, const unsigned int y2, const unsigned int color);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     *  Funcion dibuja las lineas del rectangulo de la imagen
      */
     void drawRectangle(const unsigned int x, const unsigned int y, const unsigned int w, const unsigned int h, const unsigned int color);
 

@@ -11,22 +11,22 @@ class Configuration
 {
 public:
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor publico de la clase Configuration con un parametro tipo char.
      */
     Configuration(const char *path);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor por defecto
      */
     ~Configuration();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion de tipo boolean siguiente que no recibe ningun parametro
      */
     bool next();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion de tipo char que obtiene la linea
      */
     char *getline();
 
