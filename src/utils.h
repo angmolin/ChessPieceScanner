@@ -207,7 +207,7 @@ static inline void cursorForward()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Avanza el cursor una posicion hacia atras
  */
 static inline void cursorBack()
 {
@@ -215,7 +215,7 @@ static inline void cursorBack()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Coloca el cursor al principio de la linea
  */
 static inline void cursorLineStart()
 {
@@ -223,7 +223,7 @@ static inline void cursorLineStart()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Borra la pantalla.
  */
 static inline void eraseDisplay()
 {
@@ -231,7 +231,7 @@ static inline void eraseDisplay()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Mueve el cursor a unas cordenadas x, y.
  */
 static inline void moveCursor(const unsigned int x, const unsigned int y)
 {
@@ -239,7 +239,7 @@ static inline void moveCursor(const unsigned int x, const unsigned int y)
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Guarda la posicion del cursor
  */
 static inline void saveCursor()
 {
@@ -247,7 +247,7 @@ static inline void saveCursor()
 }
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Restaura el cursor
  */
 static inline void restoreCursor()
 {
@@ -288,32 +288,32 @@ static TerminalTableModel TerminalTableModelBold(TerminalTableModel::tableModel{
 Terminal::key_t menu(const TerminalTable &menuTable, const Terminal::key_t minKey, const Terminal::key_t maxKey);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Menu principal
  */
 void mainMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Cabina de fotos
  */
 void photoBooth(SerialPort &serial, WebcamV4L2 &webcamV4L2);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Menu manual
  */
 void manualMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Menu experto
  */
 void expertMenu(SerialPort &serial, WebcamV4L2 &webcamV4L2);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Busca la configuracion de la camara
  */
 void loadConfigWebcam(WebcamV4L2 &webcamV4L2);
 
 /**
- * Crea un nuevo objeto WebcamV4L2
+ * Busca la configuracion de la cabina de fotos
  */
 void loadConfigPhotoBooth();
 
