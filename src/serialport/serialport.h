@@ -18,32 +18,32 @@ class SerialPort
 {
 public:
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor con dos parametros de entrada
      */
     SerialPort(const char *device, const unsigned int speed);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Configura el puerto serie con 8 bits
      */
     void initialize();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor que llama a finalize()
      */
     ~SerialPort();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Finaliza el dispositivo
      */
     void finalize();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Envia y escribe en el dispositivo
      */
     int send(const char *buffer, unsigned int size);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * ***************************************************************************************
      */
     int recv(char *buffer, unsigned int size);
 

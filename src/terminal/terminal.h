@@ -71,27 +71,27 @@ public:
     } key_t;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor con tres parametros de entrada 
      */
     Terminal(const int in, const int out, const int err);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor por defecto
      */
     ~Terminal();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Desactiva Echo y lo hace inmediatamente del terminal
      */
     int disableEcho(const stream_t _stream) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Restablece inmediatemente los valores predeterminados
      */
     int restoreDefaults(const stream_t _stream) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Obtiene key
      */
     key_t getKey() const;
 

@@ -7,6 +7,6 @@
     "\\src\\terminal",
     "\\src\\webcamV4L2"
   ],
-  "SelectedNode": "\\src\\webcamV4L2\\webcamV4L2.cpp",
+  "SelectedNode": "\\src\\serialport\\serialport.h",
   "PreviewInSolutionExplorer": false
 }
