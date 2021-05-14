@@ -16,17 +16,17 @@ public:
     typedef specialChar_t tableModel[TERMINAL_TABLE_MODEL_SIZE];
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor por defecto
      */
     TerminalTableModel();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor con un parametro de entrada
      */
     TerminalTableModel(const tableModel &model);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Verifica index de la tabla
      */
     const specialChar_t &operator[](std::size_t index) const;
 
@@ -41,67 +41,67 @@ public:
     typedef std::vector<tableRowColumn> table;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Constructor con un parametro de entrada
      */
     TerminalTable(const table &termTable);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Añade una columna
      */
     void addColumn(tableRowColumn column);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Añade una fila
      */
     void addRow(tableRowColumn row);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Obtiene columnas
      */
     unsigned int getColumns() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Obtiene filas
      */
     unsigned int getRows() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion con un argumento row
      */
     const tableRowColumn &getRow(unsigned int row) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion con dos argumentos row y col
      */
     const std::wstring &getValue(unsigned int column, unsigned int row) const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que retorna termTableCellMargin
      */
     unsigned int getCellMargin() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * funcion que retorna termTableLeftPadding
      */
     unsigned int getLeftPadding() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que obtiene el TerminalTable
      */
     const TerminalTableModel &getModel() const;
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que cambia el valor termTableCellMargin
      */
     void setCellMargin(const unsigned int cellMargin);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que cambia el valor termTableLeftPadding
      */
     void setLeftPadding(const unsigned int leftPadding);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     *  Funcion que cambia el valor TerminalTable
      */
     void setModel(const TerminalTableModel &tableModel);
 

@@ -28,7 +28,7 @@ public:
     void initialize();
 
     /**
-     * Constructor que llama a finalize()
+     * Destruye el objeto serial port
      */
     ~SerialPort();
 
@@ -43,7 +43,7 @@ public:
     int send(const char *buffer, unsigned int size);
 
     /**
-     * ***************************************************************************************
+     *Recibe datos, antes vacia los datos recibidos pero no leidos
      */
     int recv(char *buffer, unsigned int size);
 

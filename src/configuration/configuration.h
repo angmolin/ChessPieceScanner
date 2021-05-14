@@ -16,17 +16,17 @@ public:
     Configuration(const char *path);
 
     /**
-     * Constructor por defecto
+     * Destruye el objeto 
      */
     ~Configuration();
 
     /**
-     * Funcion de tipo boolean siguiente que no recibe ningun parametro
+     * Funcion de tipo boolean, siguiente que no recibe ningun parametro.
      */
     bool next();
 
     /**
-     * Funcion de tipo char que obtiene la linea
+     * Funcion de tipo char que obtiene la linea.
      */
     char *getline();
 

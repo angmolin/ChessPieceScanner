@@ -18,12 +18,14 @@ class imageJPEG
 {
 public:
     /**
-     * Constructor publico con un parametro de tipo char
+     * Constructor publico con un parametro de tipo char.
+     * Crea objeto 
      */
     imageJPEG(const char *file);
 
     /**
      * Constructor con buffer de parametro de entrada
+     * Crea objeto 
      */
     imageJPEG(const WebcamV4L2::bufferV4L2_t buffer);
 
@@ -58,7 +60,7 @@ public:
     const std::vector<unsigned char> getPixel(const unsigned int x, const unsigned int y) const;
 
     /**
-     * Funcion que obtiene la altura de la imagen***************************************************************************************************
+     * Funcion que obtiene luminancia
      */
     unsigned char getLuminance(const unsigned int x, const unsigned int y) const;
 

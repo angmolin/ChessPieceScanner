@@ -36,102 +36,102 @@ public:
     WebcamV4L2(const char *device, const unsigned int width, const unsigned int height);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Inicializa el streaming
      */
     void initialize();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Destruye el objeto webcamV4L2
      */
     ~WebcamV4L2();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion boolean que confihura el dispositivo
      */
     bool configure(__u32 id, __s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura de manera automatica
      */
     bool configure_auto_exposure(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el balance de blancos
      */
     bool configure_auto_white_balance(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura la luza de fondo
      */
     bool configure_backlight_compensation(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el brillo
      */
     bool configure_brightness(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que confirgura el contraste
      */
     bool configure_contrast(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que calcula el tiempo de la exposicion
      */
     bool configure_exposure_time(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion de un argumento
      */
     bool configure_gain(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura la correcion de gamma
      */
     bool configure_gamma_correction(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el tono
      */
     bool configure_hue(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura la frecuencia
      */
     bool configure_power_line_frequency(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura la saturacion
      */
     bool configure_saturation(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura la nitidez
      */
     bool configure_sharpness(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el balance de la temperatura
      */
     bool configure_white_balance_temperature(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el giro vertical
      */
     bool configure_vertical_flip(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que configura el giro horizontal
      */
     bool configure_horizontal_flip(__s32 value);
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que detiene el streaming y libera memoria
      */
     void finalize();
 
     /**
-     * Crea un nuevo objeto WebcamV4L2
+     * Funcion que encola y desencola la imagen
      */
     const WebcamV4L2::bufferV4L2_t &captureFrame();
 
