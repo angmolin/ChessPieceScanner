@@ -1,4 +1,3 @@
-#define SERVO_ROTO
 /*
    Arduino UNO
 
@@ -202,11 +201,7 @@ void setup() {
 
   CMD_FUNCTION_MOVETO            = Command(201, 1, [](unsigned int argumentsCount, Command::argumentT *arguments) {
     if (arguments[0].letter == 'J') {
-      #ifdef SERVO_ROTO
-      if (arguments[0].number >= 30 && arguments[0].number <= 45) {
-      #else
       if (arguments[0].number >= 0 && arguments[0].number <= 120) {
-      #endif
         servoYAxis.attach(SERVO_Y_AXIS);
         servoYAxis.write(arguments[0].number);
         delay(500);
